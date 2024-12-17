@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container file-upload-container">
   <h1 class="page-title">Your Files</h1>
 
   <!-- Upload New File Button -->
@@ -17,32 +17,35 @@
       </tr>
     </thead>
     <tbody>
-      <%if @file_uploads.blank? %>
+      <% if @file_uploads.blank? %>
         <tr>
-          <td> No data to show </td>
+          <td colspan="4" class="empty-state">No data to show</td>
         </tr>
       <% else %>
         <% @file_uploads.each do |fup| %>
           <tr>
-            <td>
-              <strong><%= fup.title %></strong>
-            </td>
-            <td>
-              <% if fup.description.present? %>
-                <p class="file-description"><%= fup.description %></p>
-              <% end %>
-            </td>
-            <td>
-              <p><%= fup.file_type %></p>
-            </td>
+            <td><strong><%= fup.title %></strong></td>
+            <td><%= fup.description.presence || "NA" %></td>
+            <td><%= fup.file_type %></td>
             <td>
               <%= link_to 'Download', rails_blob_path(fup.file, disposition: "attachment"), class: "btn-action btn-download" if fup.file.attached? %>
-              <%= link_to 'Delete', file_upload_path(fup), method: :delete, data: { confirm: 'Are you sure you want to delete this entryex?' }, class: "btn-action btn-delete" %>
-              <%= button_to 'Share publicly', share_file_upload_path(fup), method: :post, class: "btn-action btn-share" %>
+              <%= link_to 'Delete', file_upload_path(fup), method: :delete, data: { confirm: 'Are you sure you want to delete this entry?' }, class: "btn-action btn-delete" %>
+              <%= link_to 'Share publicly', share_file_upload_path(fup), method: :post, remote: true, data: { id: fup.id }, class: "btn-action btn-share" %>
             </td>
           </tr>
         <% end %>
       <% end %>
     </tbody>
   </table>
+</div>
+
+<!-- Modal HTML -->
+<div id="shareModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <h2>Public URL</h2>
+    <p>Your file is now publicly accessible at:</p>
+    <input type="text" id="public-url" readonly>
+    <button id="copy-url-btn" class="btn-action btn-copy">Copy to Clipboard</button>
+  </div>
 </div>

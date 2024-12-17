@@ -21,12 +21,26 @@ class FileUploadsController < ApplicationController
 
   def destroy
     @file_upload.destroy
-    redirect_to file_uploads_path, notice: "File deleted successfully"
+    redirect_to file_uploads_path, notice:  "File deleted successfully"
   end
 
   def share
-    @file_upload.update(public_token: SecureRandom.urlsafe_base64(8))
-    redirect_to file_uploads_path, notice: "File shared publicly. URL: #{public_file_url(@file_upload.public_token)}"
+    @file_upload = current_user.file_uploads.find(params[:id])
+    @file_upload.generate_public_token unless @file_upload.public_token.present?
+
+    respond_to do |format|
+      format.json { render json: { public_url: public_file_url(@file_upload.public_token) } }
+      format.html { redirect_to file_uploads_path, notice: "File shared publicly! Public URL: #{public_file_url(@file_upload.public_token)}" }
+    end
+  end
+
+  def public_show
+    @file_upload = FileUpload.find_by(public_token: params[:token])
+    if @file_upload&.file&.attached?
+      redirect_to rails_blob_path(@file_upload.file, disposition: "inline")
+    else
+      render plain: "Invalid or expired link", status: :not_found
+    end
   end
 
   private

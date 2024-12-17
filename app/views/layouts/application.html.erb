@@ -1,16 +1,48 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FileManager</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>FileHub</title> <!-- Application Name -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+
+    <!-- jQuery (required by DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+    <%= stylesheet_link_tag 'toastr', media: 'all' %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <!-- Application Name -->
+        <div class="nav-left">
+          <a href="<%= root_path %>" class="app-name">FileHub</a>
+        </div>
+
+        <!-- Logout Button -->
+        <% if user_signed_in? %>
+          <div class="nav-right">
+            <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'logout-btn' %>
+          </div>
+        <% end %>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="content-container">
+      <%= yield %>
+    </div>
+    <%= javascript_include_tag 'toastr' %>
   </body>
 </html>

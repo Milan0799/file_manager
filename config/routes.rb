@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'public/:token', to: 'public_files#show', as: 'public_file'
+  get 'public/:token', to: 'file_uploads#public_show', as: 'public_file'
   get 'public/:token/download', to: 'public_files#download', as: 'download_public_file'
 
   root to: "file_uploads#index"
