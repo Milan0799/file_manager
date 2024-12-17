@@ -12,17 +12,14 @@ class FlashMessageComponent < ViewComponent::Base
   private
 
   def color_classes
-    case type
-    when :success
-      'alert alert-success'
-    when :error
-      'alert alert-danger'
-    when :warning
-      'alert alert-warning'
-    when :notice
-      'alert alert-info'
-    else
-      'alert alert-secondary'
-    end
-  end  
+    color_map = {
+      success: 'alert alert-success',
+      error: 'alert alert-danger',
+      warning: 'alert alert-warning',
+      notice: 'alert alert-info',
+      alert: 'alert alert-warning'
+    }
+  
+    color_map[type] || 'alert alert-secondary'
+  end 
 end

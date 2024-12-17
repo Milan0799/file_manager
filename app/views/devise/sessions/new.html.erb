@@ -23,3 +23,33 @@
     </p>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form");
+    const emailField = document.querySelector("#email");
+    const passwordField = document.querySelector("#password");
+
+    form.addEventListener("submit", function(event) {
+      let hasError = false;
+
+      // Validate email
+      if (!emailField.value.includes("@")) {
+        alert("Please enter a valid email address.");
+        hasError = true;
+      }
+
+      // Validate password
+      if (passwordField.value.trim() === "") {
+        alert("Password cannot be blank.");
+        hasError = true;
+      }
+
+      // Prevent form submission if validation fails
+      if (hasError) {
+        event.preventDefault();
+      }
+    });
+  });
+</script>
+

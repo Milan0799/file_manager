@@ -13,7 +13,7 @@ class FileUploadsController < ApplicationController
   def create
     @file_upload = current_user.file_uploads.new(file_upload_params)
     if @file_upload.save
-      redirect_to file_uploads_path, notice: "File uploaded successfully"
+      redirect_to file_uploads_path, success: "File uploaded successfully"
     else
       render :new
     end
@@ -21,7 +21,7 @@ class FileUploadsController < ApplicationController
 
   def destroy
     @file_upload.destroy
-    redirect_to file_uploads_path, notice:  "File deleted successfully"
+    redirect_to file_uploads_path, success:  "File deleted successfully"
   end
 
   def share

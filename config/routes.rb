@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for :users, controllers: { registrations: 'registrations' }
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # Custom Devise route for checking email availability
+  devise_scope :user do
+    get '/check_email', to: 'registrations#check_email'
+  end
+
+  # Reveal health status
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Authenticated routes
   authenticate :user do
     resources :file_uploads, only: [:index, :new, :create, :destroy] do
       member do
@@ -16,8 +18,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # Public file view
   get 'public/:token', to: 'file_uploads#public_show', as: 'public_file'
-  get 'public/:token/download', to: 'public_files#download', as: 'download_public_file'
 
+  # Root path
   root to: "file_uploads#index"
 end
