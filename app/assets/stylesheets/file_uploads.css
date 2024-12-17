@@ -227,7 +227,7 @@ body {
     width: 90%; /* Use 90% of the screen width */
     max-width: 1200px; /* Cap the maximum width for large screens */
     margin: 30px auto; /* Center horizontally and add vertical spacing */
-    padding: 20px;
+    /* padding: 20px; */
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;

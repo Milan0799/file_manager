@@ -2,19 +2,89 @@
 <html>
   <head>
     <title>File Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <!-- Toastr CSS -->
+    <%= stylesheet_link_tag 'toastr', media: 'all' %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+
+    <!-- Toastr JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <!-- Toastr Options -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        toastr.options = {
+          "closeButton": true,
+          "progressBar": true,
+          "positionClass": "toast-top-right",
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "3000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        };
+
+        // Display flash messages using Toastr
+        <% flash.each do |type, message| %>
+          <% toastr_type = case type
+                           when 'notice' then 'success'
+                           when 'alert' then 'error'
+                           else 'info'
+                           end %>
+          toastr['<%= toastr_type %>']("<%= j message %>");
+        <% end %>
+      });
+    </script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        margin-top: 50px;
+      }
+
+      .card {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .card-body {
+        padding: 2rem;
+      }
+
+      .content-container {
+        margin-top: 20px;
+      }
+
+      .alert {
+        margin-bottom: 15px;
+      }
+    </style>
   </head>
 
   <body>
-    <div class="container mt-5">
+    <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="card shadow-sm">
             <div class="card-body">
-              <%= yield %>
+              <!-- Flash Messages -->
+              <div class="content-container">
+                <%= yield %>
+              </div>
             </div>
           </div>
         </div>

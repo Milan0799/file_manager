@@ -1,24 +1,14 @@
 //= require rails-ujs
 //= require toastr
 document.addEventListener("DOMContentLoaded", function () {
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": true,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": true,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "3000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-      };
     $('.file-table').DataTable({});
+    const flashMessages = document.querySelectorAll('.flash-message');
+    flashMessages.forEach((message) => {
+        setTimeout(() => {
+        message.classList.remove('show');
+        setTimeout(() => message.remove(), 500);
+        }, 3000);
+    });
 });
 
 document.addEventListener("DOMContentLoaded", () => {

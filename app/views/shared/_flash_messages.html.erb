@@ -1,0 +1,10 @@
+<!-- app/views/shared/_flash_messages.html.erb -->
+<% if flash.any? %>
+  <div> <!-- Adds a margin at the top -->
+    <div>
+    <% flash.each do |type, message| %>
+        <%= render FlashMessageComponent.new(type: type, message: message) %>
+    <% end %>
+    </div>
+  </div>
+<% end %>

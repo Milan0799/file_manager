@@ -30,7 +30,7 @@ class FileUploadsController < ApplicationController
 
     respond_to do |format|
       format.json { render json: { public_url: public_file_url(@file_upload.public_token) } }
-      format.html { redirect_to file_uploads_path, notice: "File shared publicly! Public URL: #{public_file_url(@file_upload.public_token)}" }
+      format.html { redirect_to file_uploads_path, success: "File shared publicly! Public URL: #{public_file_url(@file_upload.public_token)}" }
     end
   end
 

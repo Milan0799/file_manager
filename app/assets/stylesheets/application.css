@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require_toastr
  */
 
  /* General Styles */
@@ -225,4 +226,5 @@ body {
   .btn-share:hover {
     background-color: #117a8b;
   }
+  
   
